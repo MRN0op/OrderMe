@@ -1,6 +1,4 @@
 <?php
-echo "register";
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branch_Name = $_POST['branch_Name'];
     $branch_Address = $_POST['branch_Address'];

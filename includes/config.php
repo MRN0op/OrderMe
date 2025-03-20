@@ -10,7 +10,7 @@ return [
 
     'routes' => [
         '/' => 'controllers/index.php',
-        '/api' => 'controllers/api.php',
+        '/login' => 'controllers/login.php',
         '/api/(\d+)' => '',
     ],
 ];

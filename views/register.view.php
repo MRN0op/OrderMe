@@ -16,5 +16,5 @@
     <input id="password" type="password" name="branch_Password" placeholder="Type your Password"><br>
 
     <input type="submit" name="SUBMIT_register" value="Register"><br>
-    
+    .
 </div>

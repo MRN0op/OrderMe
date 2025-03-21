@@ -2,9 +2,9 @@
 return [
     'db' => [
         'host' => 'localhost',
-        'username' => 'root',
+        'username' => 'OrderMe',
         'password' => '',
-        'database' => 'dbapi',
+        'database' => 'OrderMe',
         'port' => 3306,
     ],
 
@@ -12,6 +12,8 @@ return [
         '/' => 'controllers/index.php',
         '/login' => 'controllers/login.php',
         '/register' => 'controllers/register.php',
+        '/logout' => 'controllers/logout.php',
+
         '/api/(\d+)' => '',
     ],
 ];

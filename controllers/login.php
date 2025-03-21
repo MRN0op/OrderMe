@@ -34,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // Authentication successful - create session
                 $_SESSION['branch_ID'] = $pk_branch;
                 $_SESSION['branch_Email'] = $branch_Email;
-                //header("Location: dashboard.php"); // Redirect to dashboard
+                $_SESSION['user_type'] = "branch";
+                header("Location: /"); // Redirect to Home
                 exit;
             } else {
                 $error_message = "Incorrect email or password.";

@@ -37,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Redirect after successful registration (you can uncomment this when ready)
             // header("Location: success.php");
             // exit;
+
+            header("Location: /login");
         }
     } catch (Exception $e) {
         $error_message = "Error during registration: " . $e->getMessage();

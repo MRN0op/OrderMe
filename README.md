@@ -8,7 +8,7 @@
 
 This project is developed by:
 
-- **Mike** - Backend Development (PHP)
+- **Mike** - Backend Development (PHP, SQL)
 - **Alan** - Frontend Development (JavaScript, HTML)
 - **Loris** - UI/UX Design (TailwindCSS)
 

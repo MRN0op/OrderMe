@@ -1,16 +1,19 @@
 <?php
 return [
     'db' => [
-        'host' => 'localhost',
+        'host' => '172.20.0.2',
         'username' => 'root',
-        'password' => '',
-        'database' => 'dbapi',
+        'password' => 'mysecretpassword',
+        'database' => 'OrderMe',
         'port' => 3306,
     ],
 
     'routes' => [
         '/' => 'controllers/index.php',
-        '/api' => 'controllers/api.php',
+        '/login' => 'controllers/login.php',
+        '/register' => 'controllers/register.php',
+        '/logout' => 'controllers/logout.php',
+
         '/api/(\d+)' => '',
     ],
 ];

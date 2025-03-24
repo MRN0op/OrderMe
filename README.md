@@ -2,7 +2,7 @@
 
 ## About the Project
 
-**Order Me** is a web application designed to help restaurants manage their delivery personnel efficiently. The platform allows restaurants to register, add delivery drivers, and assign orders while providing real-time updates on delivery status and navigation support.
+**OrderMe** is a web application designed to help restaurants manage their delivery personnel efficiently. The platform allows restaurants to register, add delivery drivers, and assign orders while providing real-time updates on delivery status and navigation support.
 
 ## Team
 

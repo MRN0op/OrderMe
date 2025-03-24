@@ -1,4 +1,6 @@
 <?php
+$title = "Register";
+
 require "includes/dbconnect.php";
 require "views/register.view.php";
 require "includes/config.php"; // Ensure this file contains your database connection

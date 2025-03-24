@@ -1,9 +1,9 @@
 <?php
 return [
     'db' => [
-        'host' => 'localhost',
-        'username' => 'OrderMe',
-        'password' => '',
+        'host' => '172.20.0.2',
+        'username' => 'root',
+        'password' => 'mysecretpassword',
         'database' => 'OrderMe',
         'port' => 3306,
     ],

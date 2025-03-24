@@ -1,4 +1,7 @@
 <?php
+
+$title = "Login";
+
 //session_start(); // Start the session
 require "includes/dbconnect.php"; // Ensure database connection
 require "views/login.view.php"; // Ensure database connection

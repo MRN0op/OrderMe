@@ -31,7 +31,7 @@ require "partials/header.php";
         </form>
 
         <div class="mt-6 w-full text-center text-gray-400 hover:text-black transition">
-            <a href="/register">No account yet? Create one <span class="underline hover:text-blue-600 transition">here.</span></a>
+            <a href="/signup">No account yet? Create one <span class="underline hover:text-blue-600 transition">here.</span></a>
         </div>
 
         <div class="w-full text-center text-gray-400 hover:text-black transition">

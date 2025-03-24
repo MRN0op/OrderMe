@@ -11,7 +11,7 @@ return [
     'routes' => [
         '/' => 'controllers/index.php',
         '/login' => 'controllers/login.php',
-        '/register' => 'controllers/register.php',
+        '/signup' => 'controllers/signup.php',
         '/logout' => 'controllers/logout.php',
 
         '/api/(\d+)' => '',

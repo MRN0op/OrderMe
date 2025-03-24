@@ -12,7 +12,7 @@ $error_message = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
-    $branch_Email = $_POST['branch_Email'] ?? '';
+    $branch_Email = $_POST[''] ?? '';
     $branch_password = $_POST['branch_Password'] ?? '';
 
     // Validate input

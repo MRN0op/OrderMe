@@ -70,13 +70,13 @@
                     </div>
 
                     <div class="relative group">
-                        <a href="/register" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+                        <a href="/signup" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
                             </svg>
                         </a>
                         <span class="absolute left-1/2 -translate-x-1/2 top-8 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
-                            Register
+                            Sign up
                         </span>
                     </div>
 
@@ -119,7 +119,7 @@
                 <a href="/logout" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Logout</a>
             <?php else: ?>
                 <a href="/login" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Login</a>
-                <a href="/register" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Register</a>
+                <a href="/signup" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Sign up</a>
             <?php endif; ?>
         </div>
     </div>

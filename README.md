@@ -2,13 +2,13 @@
 
 ## About the Project
 
-**Order Me** is a web application designed to help restaurants manage their delivery personnel efficiently. The platform allows restaurants to register, add delivery drivers, and assign orders while providing real-time updates on delivery status and navigation support.
+**OrderMe** is a web application designed to help restaurants manage their delivery personnel efficiently. The platform allows restaurants to register, add delivery drivers, and assign orders while providing real-time updates on delivery status and navigation support.
 
 ## Team
 
 This project is developed by:
 
-- **Mike** - Backend Development (PHP)
+- **Mike** - Backend Development (PHP, SQL)
 - **Alan** - Frontend Development (JavaScript, HTML)
 - **Loris** - UI/UX Design (TailwindCSS)
 

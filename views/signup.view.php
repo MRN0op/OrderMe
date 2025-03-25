@@ -112,7 +112,7 @@ require "partials/header.php";
                 if (!isValid) {
                     event.preventDefault();
                 }
-            });
+            });          
         });
     </script>
 

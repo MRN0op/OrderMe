@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branch_prefix = $_POST['prefix'] ?? '';
     $branch_Email = $_POST['email'] ?? '';
     $branch_Password = $_POST['password'] ?? '';
+    $branch_ConfirmPassword = $_POST['password_confirm'] ?? '';
+    $branch_prefix = $_POST['prefix'] ?? '';
 
     if (strlen($branch_Name) < 2) {
         exit;
@@ -44,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
 
-
+    $branch_phoneNumber = $branch_prefix . $branch_phoneNumber;
 
     try {
         // Check if the email address already exists

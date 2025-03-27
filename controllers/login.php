@@ -12,8 +12,8 @@ $error_message = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
-    $branch_Email = $_POST[''] ?? '';
-    $branch_password = $_POST['branch_Password'] ?? '';
+    $branch_Email = $_POST['email'] ?? '';
+    $branch_password = $_POST['password'] ?? '';
 
     // Validate input
     if (empty($branch_Email) || empty($branch_password)) {

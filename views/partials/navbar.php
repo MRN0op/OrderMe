@@ -24,7 +24,7 @@
                 if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "branch"):
                 ?>
 
-                    <a href="/account" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+                    <a href="/dashboard" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
                         <!-- SVG icon for Account -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor">
@@ -33,14 +33,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
-                        Account
+                        Dashboard
                     </a>
 
 
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "delivery"): ?>
-                    <a href="/account" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+
+                    <a href="/dashboard" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
                         <!-- SVG icon for Account -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor">
@@ -49,8 +50,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
-                        Account
+                        Dashboard
                     </a>
+
                 <?php endif; ?>
             </div>
 
@@ -107,13 +109,13 @@
             if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "branch"):
             ?>
             
-                <a href="/account" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Account</a>
+                <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
 
             <?php endif; ?>
 
             <?php if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "delivery"): ?>
 
-                <a href="/account" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Account</a>
+                <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
 
             <?php endif; ?>
         </div>

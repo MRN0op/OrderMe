@@ -4,7 +4,6 @@ $title = "Login";
 
 //session_start(); // Start the session
 require "includes/dbconnect.php"; // Ensure database connection
-require "views/login.view.php"; // Ensure database connection
 require "includes/config.php";
 
 $error_message = "";
@@ -38,7 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['branch_ID'] = $pk_branch;
                 $_SESSION['branch_Email'] = $branch_Email;
                 $_SESSION['user_type'] = "branch";
-                header("Location: /"); // Redirect to Home
+                //header("Location: /dashboard");
+                header("Location: /");
                 exit;
             } else {
                 $error_message = "Incorrect email or password.";
@@ -51,5 +51,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "$error_message";
 }
 
-
+require "views/login.view.php"; 
 ?>

@@ -60,7 +60,16 @@
             <div class="hidden lg:flex lg:items-center lg:space-x-4">
                 <?php if (isset($_SESSION['user_type'])): ?>
 
-                    <a href="/logout" class="border border-blue-600 text-blue-600 px-5 py-2 rounded-full btn-hover">Logout</a>
+                    <div class="relative group">
+                        <a href="/logout" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                            </svg>
+                        </a>
+                        <span class="absolute left-1/2 -translate-x-1/2 top-8 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
+                            Logout
+                        </span>
+                    </div>
 
                 <?php else: ?>
 
@@ -108,14 +117,14 @@
             <?php
             if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "branch"):
             ?>
-            
+
                 <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
 
             <?php endif; ?>
 
             <?php if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "delivery"): ?>
 
-                <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
+                <a href="/dashboardDelivery" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
 
             <?php endif; ?>
         </div>

@@ -1,4 +1,7 @@
 <?php
+
+$title = "Dashboard";
+
 require "includes/dbconnect.php";
 require "includes/config.php"; // Ensure this file contains your database connection
 

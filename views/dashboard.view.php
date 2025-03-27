@@ -28,6 +28,13 @@ require "partials/wrapperTop.php";
     </form>
 </div>
 
+<div class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 duration-300 mt-6 mb-6">
+    <h1 class="text-4xl font-bold text-blue-600 text-center mb-6"> Delivery agents</h1>
+    
+</div>
+
+
+
 <?php
 
 require "partials/wrapperBot.php";

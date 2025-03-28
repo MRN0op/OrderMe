@@ -1,9 +1,9 @@
 <?php
 return [
     'db' => [
-        'host' => '172.20.0.2',
+        'host' => '127.0.0.1',
         'username' => 'root',
-        'password' => 'mysecretpassword',
+        'password' => '',
         'database' => 'OrderMe',
         'port' => 3306,
     ],
@@ -14,7 +14,8 @@ return [
         '/signup' => 'controllers/signup.php',
         '/logout' => 'controllers/logout.php',
         '/dashboard' => 'controllers/dashboard.php',
+        '/api/v1/getDeliveryAgents' => 'controllers/api/v1/getDeliveryAgents.api.php',
+        '/api/v1/verifyLogin' => 'controllers/api/v1/verifyLogin.api.php',
 
-        '/api/(\d+)' => '',
     ],
 ];

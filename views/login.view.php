@@ -68,7 +68,7 @@ require "partials/header.php";
 
             // AJAX Request
             $.ajax({
-                url: '/api/verifyLogin',
+                url: '/api/v1/verifyLogin',
                 type: "POST",
                 data: dataToSend,
                 dataType: "json", // Expect JSON response
@@ -79,8 +79,7 @@ require "partials/header.php";
                     } else {
                         // Success — Redirect or show success message
                         console.log("Login successful:", result.message);
-                        window.location.href = /;
-
+                        window.location.href = "/";
                     }
                 },
                 error: function(xhr, status, error) {

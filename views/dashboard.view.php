@@ -34,6 +34,21 @@ require "partials/wrapperTop.php";
 </div>
 
 
+<h1>Delivery Agents</h1>
+
+<?php if (isset($delivery_agents['status']) && $delivery_agents['status'] === 'success'): ?>
+    <?php foreach ($delivery_agents['data'] as $agent): ?>
+        <div class="agent">
+            <strong>Email:</strong> <?php echo htmlspecialchars($agent['pk_delivery_agent_email']); ?><br>
+            <strong>Name:</strong> <?php echo htmlspecialchars($agent['name']); ?><br>
+            <!-- <strong>Branch:</strong> <?php echo htmlspecialchars($agent['fk_branch']); ?><br> -->
+        </div>
+    <?php endforeach; ?>
+<?php else: ?>
+    <p>No delivery agents found or an error occurred.</p>
+<?php endif; ?>
+
+
 
 <?php
 

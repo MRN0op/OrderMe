@@ -18,12 +18,14 @@ require "partials/header.php";
                 <label for="email" class="block text-gray-700 font-medium">Email</label>
                 <input id="email" type="text" name="email" placeholder="Enter your email"
                     class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                <div class="emailError"></div>
             </div>
 
             <div class="mb-8">
                 <label for="password" class="block text-gray-700 font-medium">Password</label>
                 <input id="password" type="password" name="password" placeholder="Enter your password"
                     class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                <div class="passwordError"></div>
             </div>
 
             <button type="submit" name="SUBMIT_login"
@@ -39,6 +41,54 @@ require "partials/header.php";
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $("form").on("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            let isValid = true;
+
+            const dataToSend = {
+                branch_Email: $("#email").val(),
+                branch_Password: $("#password").val(),
+            };
+
+            function validateField(field, condition, messageField, message) {
+                if (condition) {
+                    $(field).addClass("border-red-600").removeClass("border-gray-300");
+                    $(messageField).text(message).removeClass("hidden").addClass("text-red-600 text-sm mt-1");
+                    isValid = false;
+                } else {
+                    $(field).removeClass("border-red-600").addClass("border-gray-300");
+                    $(messageField).text("").addClass("hidden");
+                }
+            }
+
+            if (!isValid) return; // Stop if validation fails
+
+            // AJAX Request
+            $.ajax({
+                url: '/api/verifyLogin',
+                type: "POST",
+                data: dataToSend,
+                dataType: "json", // Expect JSON response
+                success: function(result) {
+                    if (result.status) {
+                        // Display error message on the appropriate field
+                        validateField(result.field, result.status, result.messageField, result.message);
+                    } else {
+                        // Success — Redirect or show success message
+                        console.log("Login successful:", result.message);
+
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+        });
+    });
+</script>
 
 
 <?php

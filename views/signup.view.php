@@ -72,6 +72,14 @@ require "partials/header.php";
 
     <script>
         $(document).ready(function() {
+
+    
+            /*if (emailExsits) {
+                $("#email").addClass("border-red-600").removeClass("border-gray-300");
+                $(".emailError").text("An account with this email already exsits!").removeClass("hidden").addClass("text-red-600 text-sm mt-1");
+
+            }*/
+
             $("form").on("submit", function(event) {
                 let isValid = true;
 
@@ -112,7 +120,7 @@ require "partials/header.php";
                 if (!isValid) {
                     event.preventDefault();
                 }
-            });          
+            });
         });
     </script>
 

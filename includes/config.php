@@ -13,6 +13,7 @@ return [
         '/login' => 'controllers/login.php',
         '/signup' => 'controllers/signup.php',
         '/logout' => 'controllers/logout.php',
+        '/dashboard' => 'controllers/dashboard.php',
 
         '/api/(\d+)' => '',
     ],

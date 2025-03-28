@@ -16,13 +16,13 @@ require "partials/header.php";
         <form method="POST" action="">
             <div class="mb-8">
                 <label for="email" class="block text-gray-700 font-medium">Email</label>
-                <input id="email" type="text" name="branch_Email" placeholder="Enter your email"
+                <input id="email" type="text" name="email" placeholder="Enter your email"
                     class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
             </div>
 
             <div class="mb-8">
                 <label for="password" class="block text-gray-700 font-medium">Password</label>
-                <input id="password" type="password" name="branch_Password" placeholder="Enter your password"
+                <input id="password" type="password" name="password" placeholder="Enter your password"
                     class="w-full px-4 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
             </div>
 

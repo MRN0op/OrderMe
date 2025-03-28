@@ -29,13 +29,13 @@ require "partials/wrapperTop.php";
 </div>
 
 <!-- Delivery Agents Section -->
-<div class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 mt-6 mb-6">
+<div class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 duration-300 mt-6 mb-6">
     <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Delivery Agents</h1>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Agent 1 (Available) -->
         <div class="p-6 bg-white rounded-lg shadow-md border border-gray-200 transition-transform transform hover:scale-105 duration-300 flex flex-col items-center text-center group">
-            <h2 class="text-xl font-semibold text-gray-800">Agent 1</h2>
+            <h2 class="text-xl font-semibold text-gray-800">name</h2>
             <p class="text-gray-600 mt-1">📍 New York, NY</p>
             <div class="flex items-center mt-3">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 group-hover:text-green-600 transition">
@@ -70,22 +70,6 @@ require "partials/wrapperTop.php";
         </div>
     </div>
 </div>
-
-
-<h1>Delivery Agents</h1>
-
-<?php if (isset($delivery_agents['status']) && $delivery_agents['status'] === 'success'): ?>
-    <?php foreach ($delivery_agents['data'] as $agent): ?>
-        <div class="agent">
-            <strong>Email:</strong> <?php echo htmlspecialchars($agent['pk_delivery_agent_email']); ?><br>
-            <strong>Name:</strong> <?php echo htmlspecialchars($agent['name']); ?><br>
-            <!-- <strong>Branch:</strong> <?php echo htmlspecialchars($agent['fk_branch']); ?><br> -->
-        </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <p>No delivery agents found or an error occurred.</p>
-<?php endif; ?>
-
 
 
 <?php

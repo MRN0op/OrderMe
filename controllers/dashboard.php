@@ -46,19 +46,6 @@ try {
         $stmt->close();
     }
 
-    // Bestehende Lieferanten abrufen
-    $stmt = $dbConnection->prepare("SELECT pk_delivery_agent_email, name  FROM delivery_agent");
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $delivery_agents = [];
-    while ($row = $result->fetch_assoc()) {
-        $delivery_agents[] = $row;
-    }
-
-    $stmt->close();
-    $dbConnection->close();
-
 } catch (Exception $e) {
     $error_message = $e->getMessage();
     echo "$error_message";

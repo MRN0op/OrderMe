@@ -17,9 +17,5 @@ return [
         '/dashboard' => 'controllers/dashboard.php',
         '/api/v1/getDeliveryAgents' => 'controllers/api/v1/getDeliveryAgents.api.php',
         '/api/v1/verifyLogin' => 'controllers/api/v1/verifyLogin.api.php',
-
-        '/api/(\d+)' => '',
-        '/api' => 'controllers/api.php',
-        '/api/verifyLogin' => 'controllers/verifyLogin.api.php',
     ],
 ];

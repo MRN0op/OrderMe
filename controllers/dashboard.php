@@ -65,60 +65,7 @@ try {
 }
 
 
-
-
-// Define the API URL
-//$apiUrl = 'http://webap.test/api/#/?what=agents'; // Change this to your actual API URL
-$apiUrl = 'http://webap.test/getDeliveryAgents'; // Change this to your actual API URL
-//$apiUrl = '/api';
-// Initialize a cURL session
-$ch = curl_init($apiUrl);
-
-// Set cURL options
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-// Execute the cURL request
-$response = curl_exec($ch);
-echo "$response";
-// Check for cURL errors
-if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-    exit;
-}
-
-// Close the cURL session
-curl_close($ch);
-
-// Decode the JSON response
-$delivery_agents = json_decode($response, true);
-//echo "$delivery_agents";
-?>
-
-
-<!-- // <?php if (isset($delivery_agents['status']) && $delivery_agents['status'] === 'success'): ?>
-//     <?php foreach ($delivery_agents['data'] as $agent): ?>
-//         <div class="agent">
-//             <strong>Email:</strong> <?php echo htmlspecialchars($agent['pk_delivery_agent_email']); ?><br>
-//             <strong>Name:</strong> <?php echo htmlspecialchars($agent['name']); ?><br>
-//            <strong>Branch:</strong> <?php echo htmlspecialchars($agent['fk_branch']); ?><br>
-//         </div>
-//     <?php endforeach; ?>
-// <?php else: ?>
-//     <p>No delivery agents found or an error occurred.</p>
-// <?php endif; ?> -->
-
-
-
-
-<?php
-// View einbinden
 require "views/dashboard.view.php";
-
-
-// Liste Bestellungen 
-// liste Lieferanten
-// function passwort generieren damit das passwort an den user geschickt wird.
-// function Email scheken 
 ?>
 
 

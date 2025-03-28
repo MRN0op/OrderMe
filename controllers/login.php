@@ -4,7 +4,6 @@ $title = "Login";
 
 //session_start(); // Start the session
 require "includes/dbconnect.php"; // Ensure database connection
-require "includes/config.php";
 
 $error_message = "";
 

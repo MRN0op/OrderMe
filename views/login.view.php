@@ -79,6 +79,7 @@ require "partials/header.php";
                     } else {
                         // Success — Redirect or show success message
                         console.log("Login successful:", result.message);
+                        window.location.href = /;
 
                     }
                 },

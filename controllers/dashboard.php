@@ -1,7 +1,9 @@
 <?php
 $title = "Dashboard";
 
-if (!isset($_SESSION["user_type"]) && $_SESSION["user_type"] != "branch") {
+$userType = $_SESSION['user_type'] ?? null;
+
+if (!$userType && $userType != "branch") {
     abort(403);
     exit;
 }

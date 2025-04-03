@@ -17,7 +17,7 @@ try {
     $totalRecords = (int)$countResult['total'];
     $totalPages = ceil($totalRecords / $limit);
 
-    // Fetch paginated unfinished orders
+
     $stmt = $dbConnection->prepare("SELECT pk_order, fk_branch, fk_delivery_agent_email, costumer_Name, costumer_address, status, total_price, timestamp_created, timestamp_expected_delivery FROM `order` WHERE status IN ('pending', 'accepted', 'underway') LIMIT ? OFFSET ?");
     if (!$stmt) {
         throw new Exception("Prepare statement failed: " . $dbConnection->error);
@@ -32,7 +32,6 @@ try {
         $orders[] = $row;
     }
 
-    // Prepare response
     $response['status'] = 'success';
     $response['data'] = $orders;
     $response['pagination'] = [
@@ -47,9 +46,9 @@ try {
     $response['message'] = $e->getMessage();
 }
 
-// Return the result as JSON
+
 echo json_encode($response);
 
-// Close the database connection
+
 $dbConnection->close();
 ?>

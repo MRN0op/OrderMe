@@ -1,11 +1,11 @@
 <?php
 require "includes/dbconnect.php";
-require "includes/config.php"; 
+require "includes/config.php"; // Sicherstellen, dass die DB-Verbindung funktioniert
 
 $response = [];
 
 try {
-    
+
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
     $offset = ($page - 1) * $limit;
@@ -17,6 +17,7 @@ try {
     $totalRecords = (int)$countResult['total'];
     $totalPages = ceil($totalRecords / $limit);
 
+    // Paginierte "finished" Orders abrufen
     $stmt = $dbConnection->prepare("SELECT pk_order, fk_branch, fk_delivery_agent_email, costumer_Name, costumer_address, status, total_price, timestamp_created, timestamp_expected_delivery FROM `order` WHERE status = 'finished' LIMIT ? OFFSET ?");
     if (!$stmt) {
         throw new Exception("Prepare statement fehlgeschlagen: " . $dbConnection->error);
@@ -31,7 +32,7 @@ try {
         $orders[] = $row;
     }
 
-   
+    // Antwort vorbereiten
     $response['status'] = 'success';
     $response['data'] = $orders;
     $response['pagination'] = [
@@ -46,9 +47,9 @@ try {
     $response['message'] = $e->getMessage();
 }
 
-
+// JSON-Ausgabe
 echo json_encode($response);
 
-
+// DB-Verbindung schließen
 $dbConnection->close();
 ?>

@@ -94,6 +94,19 @@ require "partials/header.php";
                     }
                 }
 
+                $.ajax({
+                url: '/api/v1/checkEmail',
+                type: "POST",
+                data: { email: $("#email").val()},
+                dataType: "json", // Expect JSON response
+                success: function(result) {
+                    validateField("#email", result.exists, $(".emailError"), result.status);
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                }
+            });
+
                 // Validate Name (at least 2 characters)
                 validateField("#name", $.trim($("#name").val()).length < 2, $(".nameError"), "Name must be at least 2 characters long.");
 

@@ -15,8 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $branch_Email = $_POST['email'] ?? '';
     $branch_Password = $_POST['password'] ?? '';
     $branch_ConfirmPassword = $_POST['password_confirm'] ?? '';
-    $branch_prefix = $_POST['prefix'] ?? '';
-
+    
     if (strlen($branch_Name) < 2) {
         exit;
     }

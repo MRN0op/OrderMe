@@ -1,17 +1,17 @@
 <?php
-session_start(); // Session starten, um Branch-Daten zu nutzen
 $title = "Dashboard";
 
+if (!isset($_SESSION["user_type"]) && $_SESSION["user_type"] != "branch") {
+    abort(403);
+}
+
 require "includes/dbconnect.php";
-require "includes/config.php"; 
 
 $error_message = "";
 
 try {
     // Prüfen, ob der Benutzer eingeloggt ist und zu einer Filiale gehört
-    if (!isset($_SESSION["branch_id"])) {
-        throw new Exception("Fehler: Keine Berechtigung. Bitte melden Sie sich an.");
-    }
+    
 
     $fk_branch = $_SESSION["branch_id"]; // Branch-ID aus Session holen
 

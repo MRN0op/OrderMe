@@ -46,6 +46,7 @@ CREATE TABLE `order` (
     total_price DECIMAL(10,2) NOT NULL,
     timestamp_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     timestamp_expected_delivery TIMESTAMP NULL DEFAULT NULL,
+    timestamp_delivered TIMESTAMP NULL DEFAULT NULL,
     FOREIGN KEY (fk_branch) REFERENCES branch(pk_branch),
     FOREIGN KEY (fk_delivery_agent_email) REFERENCES delivery_agent(pk_delivery_agent_email)
 );
@@ -83,11 +84,11 @@ VALUES
 (2, 'drinks', 'Diekirch Bier', 3.99, 'Luxemburgisches Bier');
 
 
-INSERT INTO `order` (fk_branch, fk_delivery_agent_email, costumer_Name, costumer_address, status, total_price, timestamp_created, timestamp_expected_delivery)
+INSERT INTO `order` (fk_branch, fk_delivery_agent_email, costumer_Name, costumer_address, status, total_price, timestamp_created, timestamp_expected_delivery, timestamp_delivered)
 VALUES
 (1, 'luc@delivery.com', 'Jean Dupont', '3 Rue des Capucins, 1313 Luxembourg', 'pending', 19.98, CURRENT_TIMESTAMP, NULL),
-(1, 'sophie@delivery.com', 'Marie Muller', '5 Boulevard Royal, 2449 Luxembourg', 'accepted', 22.99, CURRENT_TIMESTAMP, '2025-04-04 12:00:00'),
-(2, 'marc@delivery.com', 'Tom Weber', '7 Avenue de la Liberté, 1930 Esch-sur-Alzette', 'underway', 17.99, CURRENT_TIMESTAMP, '2025-04-04 13:30:00');
+(1, 'sophie@delivery.com', 'Marie Muller', '5 Boulevard Royal, 2449 Luxembourg', 'accepted', 22.99, CURRENT_TIMESTAMP, '2025-04-04 12:00:00', '2025-04-04 12:45:00'),
+(2, 'marc@delivery.com', 'Tom Weber', '7 Avenue de la Liberté, 1930 Esch-sur-Alzette', 'underway', 17.99, CURRENT_TIMESTAMP, '2025-04-04 13:30:00', '2025-04-04 14:00:00');
 
 
 INSERT INTO order_item (fk_order, fk_menu_item)

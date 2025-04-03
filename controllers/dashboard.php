@@ -3,6 +3,7 @@ $title = "Dashboard";
 
 if (!isset($_SESSION["user_type"]) && $_SESSION["user_type"] != "branch") {
     abort(403);
+    exit;
 }
 
 require "includes/dbconnect.php";

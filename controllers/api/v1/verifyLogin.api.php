@@ -7,23 +7,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $branch_Email = $_POST['branch_Email'] ?? '';
     $branch_password = $_POST['branch_Password'] ?? '';
     $responses = []; // Store multiple errors
-    $hasErrors = false;
+    $hasErrors = [
+                    'email' => false,
+                    'password' => false,
+                ];
 
     if (empty($branch_Email)) {
         $responses[] = ['field' => '#email', 'status' => true, 'messageField' => '.emailError', 'message' => 'Empty email'];
-        $hasErrors = true;
+        $hasErrors['email'] = true;
     } else {
         $responses[] = ['field' => '#email', 'status' => false, 'messageField' => '.emailError', 'message' => ''];
     }
     
     if (empty($branch_password)) { // Separate check for password
         $responses[] = ['field' => '#password', 'status' => true, 'messageField' => '.passwordError', 'message' => 'Empty password'];
-        $hasErrors = true;
+        $hasErrors['password'] = true;
     } else {
         $responses[] = ['field' => '#password', 'status' => false, 'messageField' => '.passwordError', 'message' => ''];
     }
 
-    if (!$hasErrors) { // Only check DB if no validation errors
+    if (!$hasErrors['email'] || !$hasErrors['password']) { // Only check DB if no validation errors
         $stmt = $dbConnection->prepare("SELECT pk_branch, branch_password FROM branch WHERE branch_Email = ?");
         $stmt->bind_param("s", $branch_Email);
         $stmt->execute();
@@ -47,14 +50,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit;
             } else {
                 $responses[] = ['field' => '#password', 'status' => true, 'messageField' => '.passwordError', 'message' => 'Incorrect password'];
-                $hasErrors = true;
+                $hasErrors['password'] = true;
             }
 
             $responses[] = ['field' => '#email', 'status' => false, 'messageField' => '.emailError', 'message' => ''];
 
         } else {
             $responses[] = ['field' => '#email', 'status' => true, 'messageField' => '.emailError', 'message' => 'No account with this email'];
-            $hasErrors = true;
+            $hasErrors['email'] = true;
         }
     }
 

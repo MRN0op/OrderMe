@@ -13,7 +13,7 @@ try {
     // Prüfen, ob der Benutzer eingeloggt ist und zu einer Filiale gehört
     
 
-    $fk_branch = $_SESSION["branch_id"]; // Branch-ID aus Session holen
+    $fk_branch = $_SESSION["branch_ID"]; // Branch-ID aus Session holen
 
     // Lieferanten hinzufügen
     if ($_SERVER["REQUEST_METHOD"] == "POST") {

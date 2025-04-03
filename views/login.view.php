@@ -73,13 +73,16 @@ require "partials/header.php";
                 data: dataToSend,
                 dataType: "json", // Expect JSON response
                 success: function(result) {
-                    if (result.status) {
-                        // Display error message on the appropriate field
-                        validateField(result.field, result.status, result.messageField, result.message);
-                    } else {
-                        // Success — Redirect or show success message
-                        console.log("Login successful:", result.message);
+                    if (result.errors) {
+                        // Loop through errors and show messages
+                        result.errors.forEach(error => {
+                            validateField(error.field, error.status, error.messageField, error.message);
+                        });
+                    } else if (result.status) {
+                        // Redirect if login is successful
                         window.location.href = "/";
+                    } else {
+                        console.log("Unexpected response:", result);
                     }
                 },
                 error: function(xhr, status, error) {

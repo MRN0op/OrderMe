@@ -6,16 +6,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $branch_Email = $_POST['branch_Email'] ?? '';
     $branch_password = $_POST['branch_Password'] ?? '';
-    $errors = []; // Store multiple errors
+    $responses = []; // Store multiple errors
+    $hasErrors = false;
 
     if (empty($branch_Email)) {
-        $errors[] = ['field' => '#email', 'status' => true, 'messageField' => '.emailError', 'message' => 'Empty email'];
-    } 
+        $responses[] = ['field' => '#email', 'status' => true, 'messageField' => '.emailError', 'message' => 'Empty email'];
+        $hasErrors = true;
+    } else {
+        $responses[] = ['field' => '#email', 'status' => false, 'messageField' => '.emailError', 'message' => ''];
+    }
+    
     if (empty($branch_password)) { // Separate check for password
-        $errors[] = ['field' => '#password', 'status' => true, 'messageField' => '.passwordError', 'message' => 'Empty password'];
-    } 
+        $responses[] = ['field' => '#password', 'status' => true, 'messageField' => '.passwordError', 'message' => 'Empty password'];
+        $hasErrors = true;
+    } else {
+        $responses[] = ['field' => '#password', 'status' => false, 'messageField' => '.passwordError', 'message' => ''];
+    }
 
-    if (empty($errors)) { // Only check DB if no validation errors
+    if (!$hasErrors) { // Only check DB if no validation errors
         $stmt = $dbConnection->prepare("SELECT pk_branch, branch_password FROM branch WHERE branch_Email = ?");
         $stmt->bind_param("s", $branch_Email);
         $stmt->execute();
@@ -35,17 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['branch_ID'] = $pk_branch;
                 $_SESSION['branch_Email'] = $branch_Email;
                 $_SESSION['user_type'] = "branch";
+                $responses[] = ['field' => '#password', 'status' => false, 'messageField' => '.passwordError', 'message' => ''];
                 exit;
             } else {
-                $errors[] = ['field' => '#password', 'status' => true, 'messageField' => '.passwordError', 'message' => 'Incorrect password'];
+                $responses[] = ['field' => '#password', 'status' => true, 'messageField' => '.passwordError', 'message' => 'Incorrect password'];
+                $hasErrors = true;
             }
+
+            $responses[] = ['field' => '#email', 'status' => false, 'messageField' => '.emailError', 'message' => ''];
+
         } else {
-            $errors[] = ['field' => '#email', 'status' => true, 'messageField' => '.emailError', 'message' => 'No account with this email'];
+            $responses[] = ['field' => '#email', 'status' => true, 'messageField' => '.emailError', 'message' => 'No account with this email'];
+            $hasErrors = true;
         }
     }
 
     // Return errors if any exist
     header('Content-Type: application/json');
-    echo json_encode(['errors' => $errors]);
+    echo json_encode(['errors' => $responses]);
     exit;
 }

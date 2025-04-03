@@ -1,22 +1,28 @@
 <?php
+session_start(); // Session starten, um Branch-Daten zu nutzen
 $title = "Dashboard";
-//require "controllers/api.php";
+
 require "includes/dbconnect.php";
-require "includes/config.php"; // Ensure this file contains your database connection
+require "includes/config.php"; 
 
 $error_message = "";
 
 try {
+    // Prüfen, ob der Benutzer eingeloggt ist und zu einer Filiale gehört
+    if (!isset($_SESSION["branch_id"])) {
+        throw new Exception("Fehler: Keine Berechtigung. Bitte melden Sie sich an.");
+    }
+
+    $fk_branch = $_SESSION["branch_id"]; // Branch-ID aus Session holen
+
     // Lieferanten hinzufügen
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $email = $_POST["email"] ?? null;
         $name = $_POST["name"] ?? null;
-       
 
         if (!$email) {
             throw new Exception("Fehler: Email darf nicht leer sein!");
         }
-    
 
         // Prüfen, ob die Email schon existiert
         $stmt_check = $dbConnection->prepare("SELECT COUNT(*) FROM delivery_agent WHERE pk_delivery_agent_email = ?");
@@ -35,8 +41,8 @@ try {
         $password_hash = password_hash($password_plain, PASSWORD_DEFAULT);
 
         // Lieferanten in die Datenbank einfügen
-        $stmt = $dbConnection->prepare("INSERT INTO delivery_agent (pk_delivery_agent_email, name, passwort_hash, status) VALUES (?, ?, ?, 'unavailable')");
-        $stmt->bind_param("sss", $email, $name, $password_hash);
+        $stmt = $dbConnection->prepare("INSERT INTO delivery_agent (pk_delivery_agent_email, name, fk_branch, passwort_hash, status) VALUES (?, ?, ?, ?, 'unavailable')");
+        $stmt->bind_param("ssis", $email, $name, $fk_branch, $password_hash);
 
         if (!$stmt->execute()) {
             throw new Exception("Fehler beim Hinzufügen: " . $stmt->error);
@@ -51,9 +57,5 @@ try {
     echo "$error_message";
 }
 
-
 require "views/dashboard.view.php";
 ?>
-
-
-

@@ -34,9 +34,9 @@ require "partials/wrapperTop.php";
     class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 duration-300 mt-6 mb-6">
     <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Delivery Agents</h1>
 
-        <div id="deliveryAgentsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Delivery Agents will be shown here -->
-        </div>
+    <div id="deliveryAgentsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Delivery Agents will be shown here -->
+    </div>
 </div>
 
 <div
@@ -302,6 +302,7 @@ require "partials/wrapperTop.php";
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
+                    console.log(response)
                     if (response.status === "success") {
                         let agentsContainer = $("#deliveryAgentsContainer");
                         agentsContainer.empty();

@@ -5,14 +5,14 @@ $response = [];
 
 try {
     // Get restaurant_id from GET parameter
-    if (!isset($_GET['restaurant_id'])) {
+    if (!isset($_SESSION['branch_ID'])) {
         throw new Exception("Restaurant ID not provided.");
     }
-    $restaurantId = (int)$_GET['restaurant_id'];
+    $restaurantId = (int) $_SESSION['branch_ID'];
 
     // Get page number and limit from GET parameters
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
+    $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
+    $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 6;
     $offset = ($page - 1) * $limit;
 
     // Get total records count for the specific restaurant (all statuses)
@@ -22,7 +22,7 @@ try {
     $countStmt->bind_param("i", $restaurantId);
     $countStmt->execute();
     $countResult = $countStmt->get_result()->fetch_assoc();
-    $totalRecords = (int)$countResult['total'];
+    $totalRecords = (int) $countResult['total'];
     $totalPages = ceil($totalRecords / $limit);
 
     // Fetch paginated results for the specific restaurant (all statuses)

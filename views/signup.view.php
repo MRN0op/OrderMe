@@ -73,7 +73,7 @@ require "partials/header.php";
     <script>
         $(document).ready(function() {
 
-    
+
             /*if (emailExsits) {
                 $("#email").addClass("border-red-600").removeClass("border-gray-300");
                 $(".emailError").text("An account with this email already exsits!").removeClass("hidden").addClass("text-red-600 text-sm mt-1");
@@ -95,17 +95,19 @@ require "partials/header.php";
                 }
 
                 $.ajax({
-                url: '/api/v1/checkEmail',
-                type: "POST",
-                data: { email: $("#email").val()},
-                dataType: "json", // Expect JSON response
-                success: function(result) {
-                    validateField("#email", result.exists, $(".emailError"), result.status);
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX Error:", error);
-                }
-            });
+                    url: '/api/v1/checkEmail',
+                    type: "POST",
+                    data: {
+                        email: $("#email").val()
+                    },
+                    dataType: "json", // Expect JSON response
+                    success: function(result) {
+                        validateField("#email", result.exists, $(".emailError"), result.status);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                    }
+                });
 
                 // Validate Name (at least 2 characters)
                 validateField("#name", $.trim($("#name").val()).length < 2, $(".nameError"), "Name must be at least 2 characters long.");

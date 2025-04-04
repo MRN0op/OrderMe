@@ -17,7 +17,7 @@ try {
 
     // Get total records count for the specific restaurant (all statuses)
     $countStmt = $dbConnection->prepare(
-        "SELECT COUNT(*) AS total FROM delivery_agent WHERE restaurant_id = ?"
+        "SELECT COUNT(*) AS total FROM delivery_agent WHERE $restaurantId = ?"
     );
     $countStmt->bind_param("i", $restaurantId);
     $countStmt->execute();
@@ -29,7 +29,7 @@ try {
     $stmt = $dbConnection->prepare(
         "SELECT pk_delivery_agent_email, name, current_location, status 
         FROM delivery_agent 
-        WHERE restaurant_id = ? 
+        WHERE $restaurantId = ? 
         LIMIT ? OFFSET ?"
     );
     if (!$stmt) {

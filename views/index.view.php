@@ -1,7 +1,17 @@
 <?php
 
-    require "partials/header.php";
-    require "partials/navbar.php"
+require "partials/header.php";
+require "partials/navbar.php";
+require "partials/banner.php";
+require "partials/wrapperTop.php";
 
 ?>
-<h1> <?= $hello ?> </h1>
+
+
+
+<?php
+
+require "partials/wrapperBot.php";
+require "partials/footer.php";
+
+?>

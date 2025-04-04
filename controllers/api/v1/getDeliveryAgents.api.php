@@ -1,29 +1,42 @@
 <?php
 require "includes/dbconnect.php";
-require "includes/config.php"; // Ensure this file contains your database connection
 
 $response = [];
 
 try {
+    // Get restaurant_id from GET parameter
+    if (!isset($_GET['restaurant_id'])) {
+        throw new Exception("Restaurant ID not provided.");
+    }
+    $restaurantId = (int)$_GET['restaurant_id'];
+
     // Get page number and limit from GET parameters
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
+    $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 6;
     $offset = ($page - 1) * $limit;
 
-    // Get total records count
-    $countStmt = $dbConnection->prepare("SELECT COUNT(*) AS total FROM delivery_agent");
+    // Get total records count for the specific restaurant (all statuses)
+    $countStmt = $dbConnection->prepare(
+        "SELECT COUNT(*) AS total FROM delivery_agent WHERE restaurant_id = ?"
+    );
+    $countStmt->bind_param("i", $restaurantId);
     $countStmt->execute();
     $countResult = $countStmt->get_result()->fetch_assoc();
     $totalRecords = (int)$countResult['total'];
     $totalPages = ceil($totalRecords / $limit);
 
-    // Fetch paginated results
-    $stmt = $dbConnection->prepare("SELECT pk_delivery_agent_email, name FROM delivery_agent LIMIT ? OFFSET ?");
+    // Fetch paginated results for the specific restaurant (all statuses)
+    $stmt = $dbConnection->prepare(
+        "SELECT pk_delivery_agent_email, name, current_location, status 
+        FROM delivery_agent 
+        WHERE restaurant_id = ? 
+        LIMIT ? OFFSET ?"
+    );
     if (!$stmt) {
         throw new Exception("Prepare statement failed: " . $dbConnection->error);
     }
 
-    $stmt->bind_param("ii", $limit, $offset);
+    $stmt->bind_param("iii", $restaurantId, $limit, $offset);
     $stmt->execute();
     $result = $stmt->get_result();
 

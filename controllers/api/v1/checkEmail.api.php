@@ -1,6 +1,5 @@
 <?php
 require "includes/dbconnect.php";
-require "includes/config.php"; // Ensure database connection
 
 header("Content-Type: application/json");
 

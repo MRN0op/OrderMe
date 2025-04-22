@@ -5,7 +5,7 @@ require "includes/config.php"; // Ensure this file contains your database connec
 $response = [];
 
 try {
-    // Get page number and limit from GET parameters
+    // Get page number and limit from GET parameters Pagination
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 5;
     $offset = ($page - 1) * $limit;

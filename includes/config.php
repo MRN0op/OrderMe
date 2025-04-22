@@ -2,9 +2,9 @@
 return [
     'db' => [
 
-        'host' => '127.0.0.1',
-        'username' => 'OrderMe',
-        'password' => 'test',
+        'host' => '172.20.0.2',
+        'username' => 'root',
+        'password' => 'mysecretpassword',
         'database' => 'OrderMe',
         'port' => 3306,
     ],

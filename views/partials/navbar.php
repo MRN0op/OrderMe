@@ -3,7 +3,11 @@
         <div class="flex justify-between items-center h-16">
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="/" class="text-2xl font-extrabold text-gray-800">OrderMe</a>
+                <a href="/" class="text-4xl font-extrabold flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 transition-colors duration-300 ease-in-out hover:fill-blue-600" viewBox="0 -960 960 960" fill="currentColor">
+                        <path d="M280-160q-50 0-85-35t-35-85H60l18-80h113q17-19 40-29.5t49-10.5q26 0 49 10.5t40 29.5h167l84-360H182l4-17q6-28 27.5-45.5T264-800h456l-37 160h117l120 160-40 200h-80q0 50-35 85t-85 35q-50 0-85-35t-35-85H400q0 50-35 85t-85 35Zm357-280h193l4-21-74-99h-95l-28 120Zm-19-273 2-7-84 360 2-7 34-146 46-200ZM20-427l20-80h220l-20 80H20Zm80-146 20-80h260l-20 80H100Zm180 333q17 0 28.5-11.5T320-280q0-17-11.5-28.5T280-320q-17 0-28.5 11.5T240-280q0 17 11.5 28.5T280-240Zm400 0q17 0 28.5-11.5T720-280q0-17-11.5-28.5T680-320q-17 0-28.5 11.5T640-280q0 17 11.5 28.5T680-240Z" />
+                    </svg>
+                </a>
             </div>
 
             <!-- Desktop Navigation Links (visible on lg and above) -->
@@ -20,7 +24,7 @@
                 if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "branch"):
                 ?>
 
-                    <a href="/account" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+                    <a href="/dashboard" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
                         <!-- SVG icon for Account -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor">
@@ -29,14 +33,15 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
-                        Account
+                        Dashboard
                     </a>
 
 
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "delivery"): ?>
-                    <a href="/account" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+
+                    <a href="/dashboard" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
                         <!-- SVG icon for Account -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"
                             stroke-width="1.5" stroke="currentColor">
@@ -45,8 +50,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
-                        Account
+                        Dashboard
                     </a>
+
                 <?php endif; ?>
             </div>
 
@@ -54,8 +60,17 @@
             <div class="hidden lg:flex lg:items-center lg:space-x-4">
                 <?php if (isset($_SESSION['user_type'])): ?>
 
-                    <a href="/logout" class="border border-blue-600 text-blue-600 px-5 py-2 rounded-full btn-hover">Logout</a>
-                    
+                    <div class="relative group">
+                        <a href="/logout" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+                            </svg>
+                        </a>
+                        <span class="absolute left-1/2 -translate-x-1/2 top-8 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
+                            Logout
+                        </span>
+                    </div>
+
                 <?php else: ?>
 
                     <div class="relative group">
@@ -70,13 +85,13 @@
                     </div>
 
                     <div class="relative group">
-                        <a href="/register" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
+                        <a href="/signup" class="flex items-center text-gray-700 hover:text-blue-600 font-medium transition duration-300 nav-item">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM3 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 9.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
                             </svg>
                         </a>
                         <span class="absolute left-1/2 -translate-x-1/2 top-8 px-2 py-1 text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100 transition duration-300 whitespace-nowrap">
-                            Register
+                            Sign up
                         </span>
                     </div>
 
@@ -103,13 +118,13 @@
             if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "branch"):
             ?>
 
-                <a href="/account" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Account</a>
+                <a href="/dashboard" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
 
             <?php endif; ?>
 
             <?php if (isset($_SESSION['user_type']) && $_SESSION["user_type"] == "delivery"): ?>
 
-                <a href="/account" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Account</a>
+                <a href="/dashboardDelivery" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-blue-600 hover:bg-gray-50">Dashboard</a>
 
             <?php endif; ?>
         </div>
@@ -119,7 +134,7 @@
                 <a href="/logout" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Logout</a>
             <?php else: ?>
                 <a href="/login" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Login</a>
-                <a href="/register" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Register</a>
+                <a href="/signup" class="block px-3 py-2 rounded-md text-base font-medium text-blue-600 border border-blue-600 text-center hover:bg-blue-600 hover:text-white">Sign up</a>
             <?php endif; ?>
         </div>
     </div>

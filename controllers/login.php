@@ -4,16 +4,14 @@ $title = "Login";
 
 //session_start(); // Start the session
 require "includes/dbconnect.php"; // Ensure database connection
-require "views/login.view.php"; // Ensure database connection
-require "includes/config.php";
 
 $error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
-    $branch_Email = $_POST['branch_Email'] ?? '';
-    $branch_password = $_POST['branch_Password'] ?? '';
+    $branch_Email = $_POST['email'] ?? '';
+    $branch_password = $_POST['password'] ?? '';
 
     // Validate input
     if (empty($branch_Email) || empty($branch_password)) {
@@ -38,7 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $_SESSION['branch_ID'] = $pk_branch;
                 $_SESSION['branch_Email'] = $branch_Email;
                 $_SESSION['user_type'] = "branch";
-                header("Location: /"); // Redirect to Home
+                //header("Location: /dashboard");
+                header("Location: /");
                 exit;
             } else {
                 $error_message = "Incorrect email or password.";
@@ -51,5 +50,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     echo "$error_message";
 }
 
-
+require "views/login.view.php"; 
 ?>

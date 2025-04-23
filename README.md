@@ -53,7 +53,7 @@ Although each team member has a primary role, all three contribute across differ
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-repo/order-me.git
+   git clone https://github.com/MRN0op/OrderMe
    ```
 
 2. Navigate to the project directory:

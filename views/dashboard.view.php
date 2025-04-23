@@ -302,7 +302,7 @@ require "partials/wrapperTop.php";
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
-                    console.log(response)
+                    console.log(response);
                     if (response.status === "success") {
                         let agentsContainer = $("#deliveryAgentsContainer");
                         agentsContainer.empty();
@@ -311,19 +311,63 @@ require "partials/wrapperTop.php";
                             agentsContainer.append('<p class="text-center text-gray-600">No delivery agents</p>');
                         } else {
                             response.data.forEach(agent => {
-                                let agentHtml = `
-                                <div class="p-6 bg-white rounded-lg shadow-md border border-gray-200 transition-transform transform hover:scale-105 duration-300 flex flex-col items-center text-center group">
-                                    <h2 class="text-xl font-semibold text-gray-800">${agent.name}</h2>
-                                    <p class="text-gray-600 mt-1">📍 Location Unknown</p>
-                                    <div class="flex items-center mt-3">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                                            stroke="currentColor" class="size-6 group-hover:text-green-600 transition">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                        </svg>
-                                        <span class="ml-2 font-medium group-hover:text-green-600 transition">Available</span>
-                                    </div>
-                                </div>
+                                let status = agent.status.toLowerCase();
+                                let statusText = agent.status.charAt(0).toUpperCase() + agent.status.slice(1);
+                                let hoverClass = "";
+                                let statusClass = "";
+                                let iconSvg = "";
+
+                                switch (status) {
+                                    case "available":
+                                        hoverClass = "group-hover:text-green-600";
+                                        iconSvg = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6 ${hoverClass} transition">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                                </svg>
                             `;
+                                        break;
+                                    case "busy":
+                                        hoverClass = "group-hover:text-yellow-600";
+                                        iconSvg = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6 ${hoverClass} transition">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            `;
+                                        break;
+                                    case "unavailable":
+                                        hoverClass = "group-hover:text-red-600";
+                                        iconSvg = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6 ${hoverClass} transition">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                </svg>
+                            `;
+                                        break;
+                                    default:
+                                        statusText = "Unknown";
+                                        hoverClass = "group-hover:text-gray-600";
+                                        iconSvg = `
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" class="size-6 ${hoverClass} transition">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h6" />
+                                </svg>
+                            `;
+                                        break;
+                                }
+
+                                let agentHtml = `
+                        <div class="p-6 bg-white rounded-lg shadow-md border border-gray-200 transition-transform transform hover:scale-105 duration-300 flex flex-col items-center text-center group">
+                            <h2 class="text-xl font-semibold text-gray-800">${agent.name}</h2>
+                            <p class="text-gray-600 mt-1">📍 ${agent.current_location || 'Unknown Location'}</p>
+                            <div class="flex items-center mt-3">
+                                ${iconSvg}
+                                <span class="ml-2 font-medium ${hoverClass} transition">${statusText}</span>
+                            </div>
+                        </div>
+                    `;
                                 agentsContainer.append(agentHtml);
                             });
                         }
@@ -337,6 +381,9 @@ require "partials/wrapperTop.php";
                     $("#deliveryAgentsContainer").html('<p class="text-center text-red-600">Failed to load data</p>');
                 }
             });
+
+
+
         }
 
         loadDeliveryAgents();

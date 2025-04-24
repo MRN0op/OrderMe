@@ -17,7 +17,7 @@ try {
 
     // Get total records count for the specific restaurant (all statuses)
     $countStmt = $dbConnection->prepare(
-        "SELECT COUNT(*) AS total FROM delivery_agent WHERE $restaurantId = ?"
+        "SELECT COUNT(*) AS total FROM delivery_agent WHERE fk_branch = ?"
     );
     $countStmt->bind_param("i", $restaurantId);
     $countStmt->execute();
@@ -29,7 +29,7 @@ try {
     $stmt = $dbConnection->prepare(
         "SELECT pk_delivery_agent_email, name, current_location, status 
         FROM delivery_agent 
-        WHERE $restaurantId = ? 
+        WHERE fk_branch = ? 
         LIMIT ? OFFSET ?"
     );
     if (!$stmt) {
@@ -54,7 +54,6 @@ try {
         'total_records' => $totalRecords,
         'limit' => $limit
     ];
-
 } catch (Exception $e) {
     $response['status'] = 'error';
     $response['message'] = $e->getMessage();
@@ -65,4 +64,3 @@ echo json_encode($response);
 
 // Close the database connection
 $dbConnection->close();
-?>

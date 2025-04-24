@@ -43,120 +43,8 @@ require "partials/wrapperTop.php";
     class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 duration-300 mt-6 mb-6">
 
     <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Unfinished Orders</h1>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-        <div
-            class="flex border border-gray-300 rounded-xl shadow-lg bg-white overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-300">
-            <!-- Status Indicator -->
-            <div class="w-3 bg-orange-500"></div>
-
-            <div class="p-6 flex-1">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-2xl font-semibold text-gray-800">Order #1025</h2>
-                    <span
-                        class="text-xs font-medium px-4 py-2 rounded-lg bg-orange-100 text-orange-700">Underway</span>
-                </div>
-
-                <p class="text-gray-700 mt-2 text-lg font-medium">Alice Johnson</p>
-                <p class="text-gray-500 text-sm">789 Pine St, TX</p>
-
-                <div class="border-t border-gray-200 my-4"></div>
-
-                <div class="flex justify-between text-base">
-                    <p class="text-gray-500">Delivery Agent:</p>
-                    <p class="font-semibold text-gray-800">Agent 1</p>
-                </div>
-
-                <div class="flex justify-between text-base mt-2">
-                    <p class="text-gray-500">Total Price:</p>
-                    <p class="font-semibold text-gray-800">32.25€</p>
-                </div>
-
-                <div class="border-t border-gray-200 my-4"></div>
-
-                <div class="flex justify-between text-sm">
-                    <p class="text-gray-500">Expected Delivery:</p>
-                    <p class="text-gray-700">9:00</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div
-            class="flex border border-gray-300 rounded-xl shadow-lg bg-white overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-300">
-            <!-- Status Indicator -->
-            <div class="w-3 bg-blue-500"></div>
-
-            <div class="p-6 flex-1">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-2xl font-semibold text-gray-800">Order #1026</h2>
-                    <span
-                        class="text-xs font-medium px-4 py-2 rounded-lg bg-blue-100 text-blue-700">Accepted</span>
-                </div>
-
-                <p class="text-gray-700 mt-2 text-lg font-medium">Alice Johnson</p>
-                <p class="text-gray-500 text-sm">789 Pine St, TX</p>
-
-                <div class="border-t border-gray-200 my-4"></div>
-
-                <div class="flex justify-between text-base">
-                    <p class="text-gray-500">Delivery Agent:</p>
-                    <p class="font-semibold text-gray-800">Agent 1</p>
-                </div>
-
-                <div class="flex justify-between text-base mt-2">
-                    <p class="text-gray-500">Total Price:</p>
-                    <p class="font-semibold text-gray-800">32.25€</p>
-                </div>
-
-                <div class="border-t border-gray-200 my-4"></div>
-
-                <div class="flex justify-between text-sm">
-                    <p class="text-gray-500">Expected Delivery:</p>
-                    <p class="text-gray-700">9:00</p>
-                </div>
-            </div>
-        </div>
-
-        <div
-            class="flex border border-gray-300 rounded-xl shadow-lg bg-white overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-300">
-            <!-- Status Indicator -->
-            <div class="w-3 bg-yellow-500"></div>
-
-            <div class="p-6 flex-1">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-2xl font-semibold text-gray-800">Order #1026</h2>
-                    <span
-                        class="text-xs font-medium px-4 py-2 rounded-lg bg-yellow-100 text-yellow-700">Pending</span>
-                </div>
-
-                <p class="text-gray-700 mt-2 text-lg font-medium">Alice Johnson</p>
-                <p class="text-gray-500 text-sm">789 Pine St, TX</p>
-
-                <div class="border-t border-gray-200 my-4"></div>
-
-                <div class="flex justify-between text-base">
-                    <p class="text-gray-500">Delivery Agent:</p>
-                    <select
-                        class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
-                        <option value="agent1">Agent1</option>
-                        <option value="agent2">Agent2</option>
-                        <option value="agent3">Agent3</option>
-                    </select>
-                </div>
-
-                <div class="flex justify-between text-base mt-2">
-                    <p class="text-gray-500">Total Price:</p>
-                    <p class="font-semibold text-gray-800">32.25€</p>
-                </div>
-
-                <div class="border-t border-gray-200 my-4"></div>
-
-                <div class="flex justify-between text-sm">
-                    <p class="text-gray-500">Expected Delivery:</p>
-                    <p class="text-gray-700">9:00</p>
-                </div>
-            </div>
-        </div>
+    <div id="orderContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+          
     </div>
 </div>
 
@@ -381,12 +269,111 @@ require "partials/wrapperTop.php";
                     $("#deliveryAgentsContainer").html('<p class="text-center text-red-600">Failed to load data</p>');
                 }
             });
-
-
-
         }
 
+        function unfinishedOrders() {
+            $.ajax({
+                url: '/api/v1/getUnfinishedOrders', // change to your actual endpoint
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                    console.log(response);
+
+                    let ordersContainer = $("#orderContainer");
+                    ordersContainer.empty();
+
+                    if (response.status === "success") {
+                        if (response.data.length === 0) {
+                            ordersContainer.append('<p class="text-center text-gray-600">No unfinished orders</p>');
+                        } else {
+                            response.data.forEach(order => {
+                                let status = order.status.toLowerCase();
+                                let statusDisplay = order.status.charAt(0).toUpperCase() + order.status.slice(1);
+
+                                let barColor = "";
+                                let badgeClass = "";
+
+                                switch (status) {
+                                    case "underway":
+                                        barColor = "bg-orange-500";
+                                        badgeClass = "bg-orange-100 text-orange-700";
+                                        break;
+                                    case "accepted":
+                                        barColor = "bg-blue-500";
+                                        badgeClass = "bg-blue-100 text-blue-700";
+                                        break;
+                                    case "pending":
+                                        barColor = "bg-yellow-500";
+                                        badgeClass = "bg-yellow-100 text-yellow-700";
+                                        break;
+                                    default:
+                                        barColor = "bg-gray-300";
+                                        badgeClass = "bg-gray-100 text-gray-700";
+                                }
+
+                                let deliveryAgent = order.fk_delivery_agent_email || "Unassigned";
+                                let expectedHour = new Date(order.timestamp_expected_delivery).getHours();
+
+                                let deliveryHtml = `
+                    <div class="flex border border-gray-300 rounded-xl shadow-lg bg-white overflow-hidden transform hover:scale-105 hover:shadow-2xl transition duration-300">
+                        <div class="w-3 ${barColor}"></div>
+
+                        <div class="p-6 flex-1">
+                            <div class="flex justify-between items-center">
+                                <h2 class="text-2xl font-semibold text-gray-800">Order #${order.pk_order}</h2>
+                                <span class="text-xs font-medium px-4 py-2 rounded-lg ${badgeClass}">${statusDisplay}</span>
+                            </div>
+
+                            <p class="text-gray-700 mt-2 text-lg font-medium">${order.costumer_Name}</p>
+                            <p class="text-gray-500 text-sm">${order.costumer_address}</p>
+
+                            <div class="border-t border-gray-200 my-4"></div>
+
+                            <div class="flex justify-between text-base">
+                                <p class="text-gray-500">Delivery Agent:</p>
+                                ${
+                                    status === 'pending'
+                                    ? `<select class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
+                                            <option value="agent1">Agent1</option>
+                                            <option value="agent2">Agent2</option>
+                                            <option value="agent3">Agent3</option>
+                                       </select>`
+                                    : `<p class="font-semibold text-gray-800">${deliveryAgent}</p>`
+                                }
+                            </div>
+
+                            <div class="flex justify-between text-base mt-2">
+                                <p class="text-gray-500">Total Price:</p>
+                                <p class="font-semibold text-gray-800">${order.total_price}€</p>
+                            </div>
+
+                            <div class="border-t border-gray-200 my-4"></div>
+
+                            <div class="flex justify-between text-sm">
+                                <p class="text-gray-500">Expected Delivery:</p>
+                                <p class="text-gray-700">${expectedHour}:00</p>
+                            </div>
+                        </div>
+                    </div>
+                        `;
+                                ordersContainer.append(deliveryHtml);
+                            });
+                        }
+                    } else {
+                        console.error("Error: ", response.message);
+                        ordersContainer.html('<p class="text-center text-red-600">Error loading orders</p>');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", error);
+                    $("#orderContainer").html('<p class="text-center text-red-600">Failed to load data</p>');
+                }
+            });
+        }
+
+
         loadDeliveryAgents();
+        unfinishedOrders();
     });
 </script>
 

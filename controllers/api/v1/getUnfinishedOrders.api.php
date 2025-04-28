@@ -25,7 +25,7 @@ try {
     $totalRecords = (int)$countResult['total'];
     $totalPages = ceil($totalRecords / $limit);
 
-    $stmt = $dbConnection->prepare("SELECT pk_order, fk_branch, fk_delivery_agent_email, costumer_Name, costumer_address, status, total_price, timestamp_created, timestamp_expected_delivery FROM `order` WHERE fk_branch = ? AND status IN ('pending', 'accepted', 'underway') LIMIT ? OFFSET ?");
+    $stmt = $dbConnection->prepare("SELECT pk_order, o.fk_branch, agent.name, costumer_Name, costumer_address, o.status, total_price, timestamp_created, timestamp_expected_delivery FROM `order` AS o LEFT JOIN `delivery_agent` AS agent ON fk_delivery_agent_email = pk_delivery_agent_email WHERE o.fk_branch = ? AND o.status IN ('pending', 'accepted', 'underway') LIMIT ? OFFSET ?");
     if (!$stmt) {
         throw new Exception("Prepare statement failed: " . $dbConnection->error);
     }

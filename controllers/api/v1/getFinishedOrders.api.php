@@ -1,6 +1,7 @@
 <?php
 require "includes/dbconnect.php";
-require "includes/config.php"; // Sicherstellen, dass die DB-Verbindung funktioniert
+
+header('Content-Type: application/json'); // Set JSON header
 
 $response = [];
 
@@ -18,7 +19,7 @@ try {
     $totalPages = ceil($totalRecords / $limit);
 
     // Paginierte "finished" Orders abrufen
-    $stmt = $dbConnection->prepare("SELECT pk_order, fk_branch, fk_delivery_agent_email, costumer_Name, costumer_address, status, total_price, timestamp_created, timestamp_expected_delivery FROM `order` WHERE status = 'finished' LIMIT ? OFFSET ?");
+    $stmt = $dbConnection->prepare("SELECT pk_order, o.fk_branch, agent.name, costumer_Name, costumer_address, o.status, total_price, timestamp_created, timestamp_expected_delivery, timestamp_delivered FROM `order` AS o LEFT JOIN `delivery_agent` AS agent ON fk_delivery_agent_email = pk_delivery_agent_email WHERE o.fk_branch = 3 AND o.status = 'delivered' LIMIT ? OFFSET ?");
     if (!$stmt) {
         throw new Exception("Prepare statement fehlgeschlagen: " . $dbConnection->error);
     }

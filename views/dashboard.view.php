@@ -44,7 +44,7 @@ require "partials/wrapperTop.php";
 
     <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Unfinished Orders</h1>
     <div id="orderContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-
+        <!-- Unfinished Orders will be shown here -->
     </div>
 </div>
 
@@ -52,7 +52,9 @@ require "partials/wrapperTop.php";
     class="bg-white border border-gray-200 rounded-lg shadow-lg p-8 transition-transform transform hover:scale-105 duration-300 mt-6 mb-6">
 
     <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Finished Orders</h1>
-    <div id="finishedOrderContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6"></div>
+    <div id="finishedOrderContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+        <!-- Finished Orders will be shown here -->
+    </div>
 </div>
 
 <script>

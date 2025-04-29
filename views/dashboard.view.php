@@ -37,6 +37,27 @@ require "partials/wrapperTop.php";
     <div id="deliveryAgentsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- Delivery Agents will be shown here -->
     </div>
+    <div class="mb-6 flex flex-wrap items-center gap-4">
+        <div class="flex-1">
+            <button type="submit" name="addAgent" id="btnBackAgent"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> < Back
+            </button>
+        </div>
+        <div class="flex-1">
+            <select id="filterDelivery" class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
+                <option disabled>Select a Status to Filter</option>
+                <option value="All" selected>All</option>
+                <option value="available">Available</option>
+                <option value="busy">Busy</option>
+                <option value="unavailable">Unavailable</option>
+            </select>
+        </div>
+        <div class="flex items-end">
+            <button type="submit" name="addAgent" id="btnNextAgent"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> Next >
+            </button>
+        </div>
+    </div>
 </div>
 
 <div
@@ -45,6 +66,27 @@ require "partials/wrapperTop.php";
     <h1 class="text-3xl font-bold text-blue-600 text-center mb-6">Unfinished Orders</h1>
     <div id="orderContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         <!-- Unfinished Orders will be shown here -->
+    </div>
+    <div class="mb-6 flex flex-wrap items-center gap-4">
+        <div class="flex-1">
+            <button type="submit" name="addAgent"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> < Back
+            </button>
+        </div>
+        <div class="flex-1">
+            <select id="filterUnfinishedOrders" class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
+                <option disabled>Select a Status to Filter</option>
+                <option value="All" selected>All</option>
+                <option value="accepted">Accepted</option>
+                <option value="pending">Pending</option>
+                <option value="underway">Underway</option>
+            </select>
+        </div>
+        <div class="flex items-end">
+            <button type="submit" name="addAgent"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> Next >
+            </button>
+        </div>
     </div>
 </div>
 
@@ -59,10 +101,20 @@ require "partials/wrapperTop.php";
 
 <script>
     $(document).ready(function() {
+        let currentPage = 1;
+        const limit = 6;
+
         function loadDeliveryAgents() {
+
+            
             $.ajax({
                 url: '/api/v1/getDeliveryAgents',
                 type: "GET",
+                data: {
+                    filterDelivery: $("#filterDelivery").val() || "All",
+                    page: currentPage,
+                    limit: limit
+                },
                 dataType: "json",
                 success: function(response) {
                     if (response.status === "success") {
@@ -129,6 +181,7 @@ require "partials/wrapperTop.php";
                                             <span class="ml-2 font-medium ${hoverClass} transition">${statusText}</span>
                                         </div>
                                     </div>
+                                    
                                 `;
                                 agentsContainer.append(agentHtml);
                             });
@@ -199,6 +252,7 @@ require "partials/wrapperTop.php";
             $.ajax({
                 url: '/api/v1/getUnfinishedOrders', // change to your actual endpoint
                 type: "GET",
+                data: { unfinishedOrders: $("#filterUnfinishedOrders").val() || "All" },
                 dataType: "json",
                 success: function(response) {
 
@@ -393,6 +447,31 @@ require "partials/wrapperTop.php";
         loadDeliveryAgents();
         loadUnfinishedOrders();
         loadFinishedOrders();
+
+        $("#filterDelivery").on("change", function() {
+            currentPage = 1;
+            loadDeliveryAgents();
+            console.log(currentPage);
+        });
+
+        $("#btnBackAgent").on("click", function() {
+            if (currentPage > 1) {
+                currentPage--;
+                loadDeliveryAgents();
+                console.log(currentPage);
+            }
+        });
+
+        $("#btnNextAgent").on("click", function() {
+            currentPage++;
+            loadDeliveryAgents();
+            console.log(currentPage);
+        });
+
+
+        $("#filterUnfinishedOrders").on("change", function() {
+            loadUnfinishedOrders();
+        });
     });
 </script>
 

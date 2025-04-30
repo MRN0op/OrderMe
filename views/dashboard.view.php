@@ -40,8 +40,9 @@ require "partials/wrapperTop.php";
     <div class="mb-6 flex flex-wrap items-center gap-4">
         <div class="flex-1">
             <button type="submit" name="addAgent" id="btnBackAgent"
-                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> < Back
-            </button>
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+                < Back
+                    </button>
         </div>
         <div class="flex-1">
             <select id="filterDelivery" class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
@@ -69,9 +70,10 @@ require "partials/wrapperTop.php";
     </div>
     <div class="mb-6 flex flex-wrap items-center gap-4">
         <div class="flex-1">
-            <button type="submit" name="addAgent"
-                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> < Back
-            </button>
+            <button type="submit" name="addAgent" id="btnBackUnfinishedOrder"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+                < Back
+                    </button>
         </div>
         <div class="flex-1">
             <select id="filterUnfinishedOrders" class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
@@ -83,7 +85,7 @@ require "partials/wrapperTop.php";
             </select>
         </div>
         <div class="flex items-end">
-            <button type="submit" name="addAgent"
+            <button type="submit" name="addAgent" id="btnNextUnfinishedOrder"
                 class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> Next >
             </button>
         </div>
@@ -97,22 +99,44 @@ require "partials/wrapperTop.php";
     <div id="finishedOrderContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
         <!-- Finished Orders will be shown here -->
     </div>
+    <div class="mb-6 flex flex-wrap items-center gap-4">
+        <div class="flex-1">
+            <button type="submit" name="addAgent" id="btnBackFinishedOrder"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+                < Back
+                    </button>
+        </div>
+        <div class="flex-1">
+            <select id="filterFinishedOrders" class="px-3 py-2 border rounded-md bg-gray-50 focus:ring-2 focus:ring-blue-600 w-32">
+                <option disabled>Select a Status to Filter</option>
+                <option value="All" selected>All</option>
+                <option value="delivered">Delivered</option>
+                <option value="onTime">On Time</option>
+                <option value="late">Late</option>
+            </select>
+        </div>
+        <div class="flex items-end">
+            <button type="submit" name="addAgent" id="btnNextFinishedOrder"
+                class="px-4 py-2 mt-7 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition"> Next >
+            </button>
+        </div>
+    </div>
 </div>
 
 <script>
     $(document).ready(function() {
-        let currentPage = 1;
+        let currentPageDelivery = 1;
+        let currentPageUnfinishedOrder = 1;
+        let currentPageFinishedOrder = 1;
         const limit = 6;
 
         function loadDeliveryAgents() {
-
-            
             $.ajax({
                 url: '/api/v1/getDeliveryAgents',
                 type: "GET",
                 data: {
-                    filterDelivery: $("#filterDelivery").val() || "All",
-                    page: currentPage,
+                    filter: $("#filterDelivery").val() || "All",
+                    page: currentPageDelivery,
                     limit: limit
                 },
                 dataType: "json",
@@ -252,7 +276,11 @@ require "partials/wrapperTop.php";
             $.ajax({
                 url: '/api/v1/getUnfinishedOrders', // change to your actual endpoint
                 type: "GET",
-                data: { unfinishedOrders: $("#filterUnfinishedOrders").val() || "All" },
+                data: {
+                    filter: $("#filterUnfinishedOrders").val() || "All",
+                    page: currentPageUnfinishedOrder,
+                    limit: limit
+                },
                 dataType: "json",
                 success: function(response) {
 
@@ -346,10 +374,16 @@ require "partials/wrapperTop.php";
             $.ajax({
                 url: '/api/v1/getFinishedOrders',
                 type: "GET",
+                data: {
+                    filter: $("#filterFinishedOrders").val() || "All",
+                    page: currentPageFinishedOrder,
+                    limit: limit
+                },
                 dataType: "json",
                 success: function(response) {
 
                     let ordersContainer = $("#finishedOrderContainer");
+                    ordersContainer.empty();
 
                     if (response.status === "success") {
                         if (response.data.length === 0) {
@@ -444,33 +478,114 @@ require "partials/wrapperTop.php";
             });
         }
 
+        function askTotalPages(api, filter, currentPage) {
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: api,
+                    type: "GET",
+                    data: {
+                        filter: $(filter).val() || "All",
+                        page: currentPage,
+                        limit: limit
+                    },
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.status === "success") {
+                            let totalPages = response.pagination.total_pages || 1;
+                            resolve(totalPages);
+                        } else {
+                            console.error("Error: ", response.message);
+                            $("#deliveryAgentsContainer").html('<p class="text-center text-red-600">Error loading agents</p>');
+                            reject(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", error);
+                        alert("Failed to load data");
+                        reject(error);
+                    }
+                });
+            });
+        }
+
+
         loadDeliveryAgents();
         loadUnfinishedOrders();
         loadFinishedOrders();
 
+        // Delivery Agents
         $("#filterDelivery").on("change", function() {
-            currentPage = 1;
+            currentPageDelivery = 1;
             loadDeliveryAgents();
-            console.log(currentPage);
         });
 
         $("#btnBackAgent").on("click", function() {
-            if (currentPage > 1) {
-                currentPage--;
+            if (currentPageDelivery > 1) {
+                currentPageDelivery--;
                 loadDeliveryAgents();
-                console.log(currentPage);
             }
         });
 
         $("#btnNextAgent").on("click", function() {
-            currentPage++;
-            loadDeliveryAgents();
-            console.log(currentPage);
+            askTotalPages("/api/v1/getDeliveryAgents", "#filterDelivery", currentPageDelivery).then(totalPages => {
+                if (totalPages > currentPageDelivery) {
+                    currentPageDelivery++;
+                    loadDeliveryAgents();
+                }
+            }).catch(error => {
+                console.error("Error fetching total pages:", error);
+            });
+        });
+
+        // Unfinished Orders
+
+        $("#filterUnfinishedOrders").on("change", function() {
+            currentPageUnfinishedOrder = 1;
+            loadUnfinishedOrders();
+        });
+
+        $("#btnBackUnfinishedOrder").on("click", function() {
+            if (currentPageUnfinishedOrder > 1) {
+                currentPageUnfinishedOrder--;
+                loadUnfinishedOrders();
+            }
+        });
+
+        $("#btnNextUnfinishedOrder").on("click", function() {
+            askTotalPages("/api/v1/getUnfinishedOrders", "filterUnfinishedOrders", currentPageUnfinishedOrder).then(totalPages => {
+                if (totalPages > currentPageUnfinishedOrder) {
+                    currentPageUnfinishedOrder++;
+                    loadDeliveryAgents();
+                }
+            }).catch(error => {
+                console.error("Error fetching total pages:", error);
+            });
+        });
+
+        // Finished Orders
+
+        $("#filterFinishedOrders").on("change", function() {
+            currentPageUnfinishedOrder = 1;
+            loadFinishedOrders();
+        });
+
+        $("#btnBackFinishedOrder").on("click", function() {
+            if (currentPageUnfinishedOrder > 1) {
+                currentPageUnfinishedOrder--;
+                loadUnfinishedOrders();
+            }
         });
 
 
-        $("#filterUnfinishedOrders").on("change", function() {
-            loadUnfinishedOrders();
+        $("#btnNextFinishedOrder").on("click", function() {
+            askTotalPages("/api/v1/getFinishedOrders", "#filterFinishedOrders", currentPageUnfinishedOrder).then(totalPages => {
+                if (totalPages > currentPageUnfinishedOrder) {
+                    currentPageUnfinishedOrder++;
+                    loadDeliveryAgents();
+                }
+            }).catch(error => {
+                console.error("Error fetching total pages:", error);
+            });
         });
     });
 </script>

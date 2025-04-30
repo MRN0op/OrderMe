@@ -12,7 +12,7 @@ try {
     }
     $restaurantId = (int) $_SESSION['branch_ID'];
 
-    $filterItem = isset($_GET['filterDelivery']) ? $_GET['filterDelivery'] : "All";
+    $filterItem = isset($_GET['filter']) ? $_GET['filter'] : "All";
 
     // Get page number and limit from GET parameters
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
@@ -27,7 +27,7 @@ try {
     
     // Get total records count for the specific restaurant (all statuses)
     $countStmt = $dbConnection->prepare(
-        "SELECT COUNT(*) AS total FROM delivery_agent WHERE fk_branch = ?"
+        "SELECT COUNT(*) AS total FROM delivery_agent WHERE fk_branch = ? $filter"
     );
     $countStmt->bind_param("i", $restaurantId);
     $countStmt->execute();

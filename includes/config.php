@@ -2,10 +2,10 @@
 return [
     'db' => [
 
-        'host' => '172.20.0.2',
-        'username' => 'root',
-        'password' => 'mysecretpassword',
-        'database' => 'OrderMe',
+        'host' => '127.0.0.1',
+        'username' => 'OrderMe',
+        'password' => 'test',
+        'database' => 'orderme',
         'port' => 3306,
     ],
 
@@ -18,5 +18,8 @@ return [
         '/api/v1/getDeliveryAgents' => 'controllers/api/v1/getDeliveryAgents.api.php',
         '/api/v1/verifyLogin' => 'controllers/api/v1/verifyLogin.api.php',
         '/api/v1/checkEmail' => 'controllers/api/v1/checkEmail.api.php',
+        '/api/v1/getUnfinishedOrders' => 'controllers/api/v1/getUnfinishedOrders.api.php',
+        '/api/v1/getFinishedOrders' => 'controllers/api/v1/getFinishedOrders.api.php',
+        '/api/v1/getAvailableDeliveryAgents' => 'controllers/api/v1/getAvailableDeliveryAgents.api.php'
     ],
 ];

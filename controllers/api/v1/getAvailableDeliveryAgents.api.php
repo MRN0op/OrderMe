@@ -1,8 +1,6 @@
 <?php
 require "includes/dbconnect.php";
 
-header('Content-Type: application/json'); // Set JSON header
-
 $response = [];
 
 try {
@@ -12,22 +10,14 @@ try {
     }
     $restaurantId = (int) $_SESSION['branch_ID'];
 
-    $filterItem = isset($_GET['filter']) ? $_GET['filter'] : "All";
-
     // Get page number and limit from GET parameters
     $page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
     $limit = isset($_GET['limit']) ? (int) $_GET['limit'] : 6;
     $offset = ($page - 1) * $limit;
 
-    if($filterItem === "All") {
-        $filter = "";
-    } else {
-        $filter = " AND status = '" . $dbConnection->real_escape_string($filterItem) . "'";
-    }
-    
     // Get total records count for the specific restaurant (all statuses)
     $countStmt = $dbConnection->prepare(
-        "SELECT COUNT(*) AS total FROM delivery_agent WHERE fk_branch = ? $filter"
+        "SELECT COUNT(*) AS total FROM delivery_agent WHERE fk_branch = ? AND status = 'available'"
     );
     $countStmt->bind_param("i", $restaurantId);
     $countStmt->execute();
@@ -39,7 +29,7 @@ try {
     $stmt = $dbConnection->prepare(
         "SELECT pk_delivery_agent_email, name, current_location, status 
         FROM delivery_agent 
-        WHERE fk_branch = ? $filter
+        WHERE fk_branch = ?  AND status = 'available'
         LIMIT ? OFFSET ?"
     );
     if (!$stmt) {

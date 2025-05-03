@@ -332,7 +332,7 @@ require "partials/wrapperTop.php";
                                             </div>
 
                                             <p class="text-gray-700 mt-2 text-lg font-medium">${order.costumer_Name}</p>
-                                            <p class="text-gray-500 text-sm">${order.costumer_address}</p>
+                                            <a class="text-gray-500 text-sm" href="/route?address=${order.costumer_address}">${order.costumer_address}</a>
 
                                             <div class="border-t border-gray-200 my-4"></div>
 

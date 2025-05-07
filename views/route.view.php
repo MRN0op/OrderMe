@@ -11,12 +11,22 @@ require "partials/navbar.php";
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-<h1 class="text-3xl font-bold text-blue-600 mb-6">Delivery route</h1>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden; /* Prevent scrolling */
+    }
+</style>
 
-<!-- Display the address here -->
-<div id="addressDisplay" class="text-xl font-semibold text-white bg-blue-600 p-4 rounded-lg shadow-lg mb-6 w-full max-w-xl text-center"></div>
+<div class="flex flex-col items-center justify-center h-screen px-4">
+    <h1 class="text-3xl font-bold text-blue-600 mb-4">Delivery route</h1>
 
-<div id="map" class="w-full max-w-5xl h-[500px] mt-8 rounded-lg shadow-lg border border-gray-300"></div>
+    <!-- Display the address here -->
+    <div id="addressDisplay" class="text-xl font-semibold text-white bg-blue-600 p-3 rounded-lg shadow-lg mb-4 w-full max-w-xl text-center"></div>
+
+    <div id="map" class="w-full max-w-5xl flex-grow h-[60%] rounded-lg shadow-lg border border-gray-300"></div>
+</div>
 
 <script>
     const apiKey = "5b3ce3597851110001cf6248a5e3ccc158c3437e942ea6a063b11bef";

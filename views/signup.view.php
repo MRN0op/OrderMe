@@ -29,16 +29,19 @@ require "partials/header.php";
 
             <div class="mb-8">
                 <label for="phoneNumber" class="block text-gray-700 font-medium">Phone Number</label>
-                <div id="phoneNumberField" class="flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:ring-2 focus-within:ring-blue-600">
-                    <select class="px-3 py-2 bg-gray-100 border-r border-gray-300 focus:outline-none" name="prefix">
-                        <option value="+352">+352 (LU)</option>
-                        <option value="+49">+49 (DE)</option>
-                    </select>
+                <div id="phoneNumberField" class="flex gap-2 items-center">
+                    <div class="w-28">
+                        <select id="countryPrefix" name="prefix"
+                            class="w-full px-2 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                            <option disabled selected>Loading...</option>
+                        </select>
+                    </div>
                     <input id="phoneNumber" type="text" name="phoneNumber" placeholder="Enter your phone number"
-                        class="w-full px-4 py-2 focus:outline-none">
+                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
                 </div>
                 <div class="phoneError"></div>
             </div>
+
 
             <div class="mb-8">
                 <label for="email" class="block text-gray-700 font-medium">Email</label>
@@ -136,6 +139,40 @@ require "partials/header.php";
                     event.preventDefault();
                 }
             });
+
+
+            fetch('https://restcountries.com/v3.1/all')
+                .then(res => res.json())
+                .then(data => {
+                    const select = document.getElementById("countryPrefix");
+                    select.innerHTML = ""; // Clear existing options
+
+                    const countries = data
+                        .filter(c => c.idd && c.idd.root && c.idd.suffixes)
+                        .map(c => ({
+                            name: c.name.common,
+                            code: c.cca2,
+                            prefix: `${c.idd.root}${c.idd.suffixes[0]}`
+                        }))
+                        .sort((a, b) => a.name.localeCompare(b.name));
+
+                    countries.forEach(c => {
+                        const option = document.createElement("option");
+                        option.value = c.prefix;
+                        option.textContent = `${c.prefix} (${c.code}) ${c.name}`;
+                        if (c.code === "LU") {
+                            option.selected = true; // Set Luxembourg as default
+                        }
+                        select.appendChild(option);
+                    });
+                })
+                .catch(err => {
+                    console.error("Error loading country codes:", err);
+                    const select = document.getElementById("countryPrefix");
+                    select.innerHTML = '<option value="+352" selected>+352 (LU)</option><option value="+49">+49 (DE)</option>';
+                });
+
+
         });
     </script>
 

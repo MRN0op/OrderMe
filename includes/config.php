@@ -15,6 +15,7 @@ return [
         '/signup' => 'controllers/signup.php',
         '/logout' => 'controllers/logout.php',
         '/dashboard' => 'controllers/dashboard.php',
+        '/route' => 'controllers/route.php',
         '/api/v1/getDeliveryAgents' => 'controllers/api/v1/getDeliveryAgents.api.php',
         '/api/v1/verifyLogin' => 'controllers/api/v1/verifyLogin.api.php',
         '/api/v1/checkEmail' => 'controllers/api/v1/checkEmail.api.php',
